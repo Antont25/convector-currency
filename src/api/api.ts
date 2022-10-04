@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const api = {
     async getExchangeRates() {
-        const res = await axios.get<ExchangeRatesType[]>('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
+        const res = await axios.get<ExchangeRatesType[]>('https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11')
         return res.data
     }
 }

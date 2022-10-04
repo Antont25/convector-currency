@@ -1,9 +1,17 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {api, ExchangeRatesType} from '../api/api';
+import axios, {AxiosError} from 'axios';
 
 
-export const fetchExchangeRates = createAsyncThunk('app/fetchExchangeRates', async (param, {dispatch}) => {
-    return await api.getExchangeRates()
+export const fetchExchangeRates = createAsyncThunk<ExchangeRatesType[], undefined, { rejectValue: string }>('app/fetchExchangeRates', async (param, {rejectWithValue}) => {
+    try {
+        return await api.getExchangeRates()
+    } catch (e) {
+
+        const error = e as Error | AxiosError
+        return rejectWithValue(error.message ? error.message : 'Some error occurred')
+    }
+
 })
 
 export const slice = createSlice({
@@ -17,13 +25,24 @@ export const slice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder.addCase(fetchExchangeRates.fulfilled, (state, action) => {
-            state.isInitialized = true
-            state.dataExchangeRates = action.payload.map(el => ({
-                ...el,
-                buy: (+el.buy).toFixed(2),
-                sale: (+el.sale).toFixed(2),
-            }))
+            if (action.payload) {
+                const newArrСurrencies = action.payload.map(el => ({
+                    ...el,
+                    buy: (+el.buy).toFixed(2),
+                    sale: (+el.sale).toFixed(2),
+                }))
+                const UAH = {ccy: 'UAH', base_ccy: 'UAH', buy: '1', sale: '1'}
+                newArrСurrencies.push(UAH)
+                state.isInitialized = true
+                state.dataExchangeRates = newArrСurrencies
+            }
         })
+            .addCase(fetchExchangeRates.rejected, (state, action) => {
+                debugger
+                state.error = action.payload as string
+                state.isInitialized = true
+                state.status = 'failed'
+            })
     }
 })
 export const appSlice = slice.reducer
