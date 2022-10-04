@@ -38,7 +38,6 @@ export const slice = createSlice({
             }
         })
             .addCase(fetchExchangeRates.rejected, (state, action) => {
-                debugger
                 state.error = action.payload as string
                 state.isInitialized = true
                 state.status = 'failed'

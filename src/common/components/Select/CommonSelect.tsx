@@ -8,7 +8,6 @@ import {useAppSelector} from '../../hooks/useAppSelector';
 import {selectExchangeRates} from '../../utils/selectors';
 
 export const CommonSelect = memo(({callback, isBuy}: CommonSelectType) => {
-    console.log('select')
     const exchangeRates = useAppSelector(selectExchangeRates)
     const [value, setValue] = useState('')
 

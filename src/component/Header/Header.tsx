@@ -7,7 +7,6 @@ import {selectExchangeRates} from '../../common/utils/selectors';
 
 
 export const Header = () => {
-    console.log('header')
     const exchangeRates = useAppSelector(selectExchangeRates)
     const newExchangeRates = exchangeRates.filter(el => el.ccy !== 'UAH')
     return (
