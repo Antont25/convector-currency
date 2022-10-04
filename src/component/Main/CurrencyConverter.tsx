@@ -81,11 +81,13 @@ export const CurrencyConverter = () => {
             <Box sx={{display: 'flex', justifyContent: 'space-evenly'}}>
                 <div className={style.currencyItem}>
                     <CommonSelect callback={setCurrencySell}/>
-                    <TextField label="Sell" variant="outlined" value={valueSell} onChange={onChangeValueSellHandler}/>
+                    <TextField type={'number'} label="Sell" variant="outlined" value={valueSell}
+                               onChange={onChangeValueSellHandler}/>
                 </div>
                 <Box className={style.currencyItem}>
                     <CommonSelect callback={setCurrencyBuy} isBuy={true}/>
-                    <TextField label="Buy" variant="outlined" value={valueBuy} onChange={onChangeValueBuyHandler}/>
+                    <TextField type={'number'} label="Buy" variant="outlined" value={valueBuy}
+                               onChange={onChangeValueBuyHandler}/>
                 </Box>
             </Box>
         </div>
