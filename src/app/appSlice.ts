@@ -35,12 +35,16 @@ export const slice = createSlice({
                 newArrСurrencies.push(UAH)
                 state.isInitialized = true
                 state.dataExchangeRates = newArrСurrencies
+                state.status = 'succeeded'
             }
         })
             .addCase(fetchExchangeRates.rejected, (state, action) => {
                 state.error = action.payload as string
                 state.isInitialized = true
                 state.status = 'failed'
+            })
+            .addCase(fetchExchangeRates.pending, (state) => {
+                state.status = 'loading'
             })
     }
 })
