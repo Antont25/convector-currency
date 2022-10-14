@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {fetchExchangeRates} from './appSlice';
 import {useAppDispatch} from '../common/hooks/useAppDispatch';
-import {Header} from '../component/Header/Header';
+import {Header} from '../component/Header';
 import {CurrencyConverter} from '../component/Main/CurrencyConverter';
 import {Container} from '@mui/material';
 import {Loading} from '../common/components/Loading/Loading';
@@ -10,14 +9,16 @@ import {useAppSelector} from '../common/hooks/useAppSelector';
 import {selectError, selectIsInitialized} from '../common/utils/selectors';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import {asyncActions} from './index';
 
 function App() {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(selectIsInitialized)
     const error = useAppSelector(selectError)
 
+
     useEffect(() => {
-        dispatch(fetchExchangeRates())
+        dispatch(asyncActions.fetchExchangeRates())
     }, [])
 
     if (!isInitialized) {

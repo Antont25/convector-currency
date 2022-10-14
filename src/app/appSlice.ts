@@ -1,9 +1,9 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {api, ExchangeRatesType} from '../api/api';
-import axios, {AxiosError} from 'axios';
+import {AxiosError} from 'axios';
 
 
-export const fetchExchangeRates = createAsyncThunk<ExchangeRatesType[], undefined, { rejectValue: string }>('app/fetchExchangeRates', async (param, {rejectWithValue}) => {
+const fetchExchangeRates = createAsyncThunk<ExchangeRatesType[], undefined, { rejectValue: string }>('app/fetchExchangeRates', async (param, {rejectWithValue}) => {
     try {
         return await api.getExchangeRates()
     } catch (e) {
@@ -13,6 +13,10 @@ export const fetchExchangeRates = createAsyncThunk<ExchangeRatesType[], undefine
     }
 
 })
+export const asyncActions = {
+    fetchExchangeRates
+}
+console.dir(fetchExchangeRates.name)
 
 export const slice = createSlice({
     name: 'app',
